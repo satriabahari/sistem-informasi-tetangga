@@ -1,7 +1,12 @@
-import Image from "next/image";
+import Container from "@/common/components/elements/Container";
+import Home from "@/modules/home";
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <main></main>
+    <Container className="pt-36">
+      <Home />
+    </Container>
   );
-}
+};
+
+export default HomePage;
