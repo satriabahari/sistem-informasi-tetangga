@@ -1,9 +1,7 @@
 "use client";
 
-import ACTIVITY_ITEMS from "@/common/constants/activity";
 import React from "react";
 import ActivityCard from "./PromotionCard";
-import PROMOTION_ITEMS from "@/common/constants/promotion";
 import useSWR from "swr";
 import { fetcher } from "@/services/fetcher";
 import { PromotionProps } from "@/common/types/promotion";
