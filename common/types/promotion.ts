@@ -1,11 +1,12 @@
 export interface PromotionProps {
+  id: number;
   title: string;
   description: string;
-  image: string;
   category: string;
-  imageProfile: string;
-  name: string;
-  date?: string;
+  image: string;
+  building_area: number;
+  block: string;
+  price: number;
   isShow?: boolean;
   [propname: string]: React.ReactNode | string | undefined;
 }

@@ -2,11 +2,10 @@ export interface ActivityProps {
   id: number;
   name: string;
   description: string;
-  date: string;
+  image: string;
+  date: Date;
   time?: string;
   location: string;
   status: string;
-  image: string;
   isShow?: boolean;
-  [propname: string]: React.ReactNode | string | undefined;
 }
