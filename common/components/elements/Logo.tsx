@@ -11,7 +11,7 @@ const Logo = () => {
         height={35}
         alt="logo"
       />
-      <h2 className="text-lg font-medium text-amber-500 dark:text-neutral-300">
+      <h2 className="text-lg font-medium text-amber-500 ">
         SINGA
       </h2>
     </div>
