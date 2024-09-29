@@ -8,22 +8,22 @@ const MENU_ITEMS: MenuItemProps[] = [
   },
   {
     title: "Kegiatan",
-    href: "/kegiatan",
+    href: "/activity",
+    isShow: true,
+  },
+  {
+    title: "Promosi",
+    href: "/promotion",
     isShow: true,
   },
   {
     title: "Layanan",
-    href: "/layanan",
-    isShow: false,
-  },
-  {
-    title: "Promosi",
-    href: "/promosi",
+    href: "/service",
     isShow: true,
   },
   {
     title: "Statistik",
-    href: "/statistik",
+    href: "/statistic",
     isShow: true,
   },
   {
