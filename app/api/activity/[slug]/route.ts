@@ -1,8 +1,9 @@
 import { createClient } from "@/common/utils/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { v4 as uuidv4 } from 'uuid';
 
 export const GET = async (
-  req: Request,
+  req: NextRequest,
   { params }: { params: { slug: string } },
 ) => {
   const supabase = createClient();
@@ -22,15 +23,62 @@ export const GET = async (
 };
 
 export const PATCH = async (
-  req: Request,
+  req: NextRequest,
   { params }: { params: { slug: string } },
 ) => {
   const supabase = createClient();
   try {
-    const requestData = await req.json();
-    await supabase.from("activities").update(requestData).eq("id", params.slug);
-    return NextResponse.json("Data Updated Successfully", { status: 200 });
+    const formData = await req.formData();
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const date = formData.get('date') as string;
+    const time = formData.get('time') as string;
+    const location = formData.get('location') as string;
+    const status = formData.get('status') as string;
+    const isShow = formData.get('isShow') === 'true';
+    const image = formData.get('image') as File | null;
+
+    let imagePath = null;
+    if (image) {
+      const fileExt = image.name.split('.').pop();
+      const fileName = `${uuidv4()}.${fileExt}`;
+      const { data, error } = await supabase.storage
+        .from('activity')
+        .upload(fileName, image);
+
+      if (error) {
+        throw error;
+      }
+
+      imagePath = data.path;
+    }
+
+    const updateData: any = {
+      name,
+      description,
+      date,
+      time,
+      location,
+      status,
+      isShow,
+    };
+
+    if (imagePath) {
+      updateData.image = imagePath;
+    }
+
+    const { data, error } = await supabase
+      .from("activities")
+      .update(updateData)
+      .eq("id", params.slug);
+
+    if (error) {
+      throw error;
+    }
+
+    return NextResponse.json({ message: "Data Updated Successfully", data }, { status: 200 });
   } catch (error) {
+    console.error("Error in PATCH /api/activity/[slug]:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 },
@@ -39,12 +87,12 @@ export const PATCH = async (
 };
 
 export const DELETE = async (
-  req: Request,
+  req: NextRequest,
   { params }: { params: { slug: string } },
 ) => {
   const supabase = createClient();
   try {
-    await supabase.from("activities").delete().eq("id", params.slug).single();
+    await supabase.from("activities").delete().eq("id", params.slug);
     return NextResponse.json("Data Deleted Successfully", { status: 200 });
   } catch (error) {
     return NextResponse.json(
