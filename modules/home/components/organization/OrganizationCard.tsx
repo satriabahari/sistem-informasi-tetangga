@@ -18,19 +18,25 @@ const OrganizationCard = ({
   image,
 }: OrganizationProps) => {
   return (
-    <Card className="flex flex-col items-center justify-center text-center">
-      <CardHeader className="">
-        <h5>{position}</h5>
-        <p>{period}</p>
+    <Card className="flex flex-col items-center justify-center text-center group">
+      <CardHeader>
+        <h5 className="text-lg font-medium dark:text-neutral-50">{position}</h5>
+        <p className="text-sm dark:text-neutral-400">{period}</p>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2 items-center">
-        <Image src={"/images/hero.jpg"} alt={name} width={100} height={100} />
-        <p>{name}</p>
-        <p>{address}</p>
+      <CardContent className="flex flex-col items-center gap-2">
+        <Image
+          src={"/images/hero.jpg"}
+          alt={name}
+          width={300}
+          height={300}
+          className="rounded-xl"
+        />
+        <p className="text-xl font-medium group-hover:text-amber-500 duration-300">{name}</p>
+      </CardContent>
+      <CardFooter className="flex flex-col dark:text-neutral-400">
         <p>{email}</p>
         <p>{phone_number}</p>
-      </CardContent>
-      <CardFooter></CardFooter>
+      </CardFooter>
     </Card>
   );
 };

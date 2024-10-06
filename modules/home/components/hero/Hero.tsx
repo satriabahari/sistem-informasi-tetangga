@@ -8,20 +8,14 @@ import SubContainer from "@/common/components/elements/SubContainer";
 const Hero = () => {
   return (
     <SubContainer className="flex flex-col items-center space-y-4">
-      <Badge className="rounded-full">
-        <StarsIcon size={16} className="text-purple-500" />
-        <span className="text-gradient-color text-xs lg:text-base">
-          SINGA
-        </span>
+      <Badge className="rounded-full border-2 border-neutral-300 from-neutral-200 to-neutral-100  bg-gradient-to-r dark:border-neutral-700 dark:from-neutral-800 dark:to-neutral-900">
+        <StarsIcon size={16} className="text-yellow-400" />
+        <span className="text-gradient-color text-xs lg:text-base">SINGA</span>
       </Badge>
 
       <TitleHero />
 
-      <Button
-      // className="bg-gradient-color rounded-full px-4 py-2 text-xs font-semibold text-neutral-200 transition duration-300 hover:scale-105 active:scale-90 lg:text-base"
-      >
-        Get Started
-      </Button>
+      {/* <Button>Get Started</Button> */}
     </SubContainer>
   );
 };

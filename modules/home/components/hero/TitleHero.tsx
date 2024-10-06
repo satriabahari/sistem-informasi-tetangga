@@ -6,7 +6,7 @@ const TitleHero = () => {
       <h1 className="text-4xl font-bold leading-tight text-neutral-700 dark:text-neutral-300 lg:text-6xl">
         Selamat Datang di
         <br />
-        <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
+        <span className="text-gradient-color">
           Sistem Informasi Tetangga
         </span>{" "}
       </h1>
