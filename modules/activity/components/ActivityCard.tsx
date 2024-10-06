@@ -19,16 +19,19 @@ const ActivityCard = ({
   image,
   ...others
 }: ActivityProps) => {
+  const previewURL = !image
+    ? "/images/hero.jpg"
+    : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity/${image}`;
   const formattedDate = new Date(date).toLocaleDateString();
   return (
     <Card className="flex h-full flex-col justify-between">
       <CardHeader>
         <Image
-          src={"/images/hero.jpg"}
+          src={previewURL}
           width={300}
           height={200}
           alt={name}
-          className="w-full rounded-xl"
+          className="h-[200px] w-full rounded-xl object-cover"
         />
       </CardHeader>
       <CardContent className="space-y-2">

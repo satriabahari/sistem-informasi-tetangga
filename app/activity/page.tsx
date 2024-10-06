@@ -5,7 +5,7 @@ import React from "react";
 
 const ActivityPage = () => {
   return (
-    <Container className="pt-44">
+    <Container className="pt-14">
       <PageHeading
         title="Aktivitas di lingkugan RT"
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
