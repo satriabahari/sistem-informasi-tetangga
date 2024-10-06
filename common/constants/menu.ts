@@ -28,7 +28,7 @@ const MENU_ITEMS: MenuItemProps[] = [
   },
   {
     title: "Admin",
-    href: "/admin",
+    href: "/admin/activity",
     isShow: true,
   },
 ];
