@@ -16,15 +16,15 @@ import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { toast } from "sonner";
 
-const FormCreate = () => {
+const FormCreateOrganization = () => {
   const [input, setInput] = useState({
-    title: "",
-    description: "",
+    name: "",
+    address: "",
+    position: "",
+    email: "",
+    phone_number: "",
+    period: "",
     image: null as File | null,
-    category: "",
-    building_area: 0,
-    block: "",
-    price: 0,
     isShow: true,
   });
 
@@ -34,32 +34,28 @@ const FormCreate = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title", input.title);
-    formData.append("description", input.description);
+    formData.append("name", input.name);
+    formData.append("address", input.address);
+    formData.append("position", input.position);
+    formData.append("email", input.email);
+    formData.append("phone_number", input.phone_number);
+    formData.append("period", input.period);
     if (input.image) {
       formData.append("image", input.image);
     }
-    formData.append("category", input.category);
-    formData.append("building_area", String(input.building_area));
-    formData.append("block", input.block);
-    formData.append("price", String(input.price));
     formData.append("isShow", String(input.isShow));
 
     try {
-      await axios.post("/api/promotion", formData, {
+      await axios.post("/api/organization", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push("/admin/promotion");
+      router.push("/admin/organization");
       toast.success("Data successfully added");
     } catch (error) {
-      console.error("Error creating promotion:", error);
+      console.error("Error creating organization:", error);
     }
-  };
-
-  const handleCategoryChange = (value: string) => {
-    setInput((prevInput) => ({ ...prevInput, category: value }));
   };
 
   const handleIsShowChange = (value: string) => {
@@ -75,57 +71,39 @@ const FormCreate = () => {
 
   return (
     <Container className="space-y-8 py-0">
-      <FormHeading title="Form Create Promotion" />
+      <FormHeading title="Form Create Organization" />
       <form
         onSubmit={handleCreate}
         className="grid grid-cols-2 items-center justify-center gap-4"
       >
         <Input
-          placeholder="Title"
-          onChange={(e) => setInput({ ...input, title: e.target.value })}
+          placeholder="Name"
+          onChange={(e) => setInput({ ...input, name: e.target.value })}
         />
         <Input
-          placeholder="Block"
-          onChange={(e) => setInput({ ...input, block: e.target.value })}
+          placeholder="Position"
+          onChange={(e) => setInput({ ...input, position: e.target.value })}
         />
         <Textarea
-          className="col-span-2"
           rows={8}
-          placeholder="Description"
-          onChange={(e) => setInput({ ...input, description: e.target.value })}
-        />
-        <Input
+          placeholder="Address"
           className="col-span-2"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />{" "}
-        <Input
-          type="number"
-          placeholder="Building Area"
-          onChange={(e) =>
-            setInput({ ...input, building_area: Number(e.target.value) })
-          }
+          onChange={(e) => setInput({ ...input, address: e.target.value })}
         />
         <Input
-          type="number"
-          placeholder="Price"
-          onChange={(e) =>
-            setInput({ ...input, price: Number(e.target.value) })
-          }
+          placeholder="Email"
+          type="email"
+          onChange={(e) => setInput({ ...input, email: e.target.value })}
         />
-        <Select onValueChange={handleCategoryChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="Real Estate">Real Estate</SelectItem>
-              <SelectItem value="Commercial">Commercial</SelectItem>
-              <SelectItem value="Residential">Residential</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <Input
+          placeholder="Phone Number"
+          type="tel"
+          onChange={(e) => setInput({ ...input, phone_number: e.target.value })}
+        />
+        <Input
+          placeholder="Period"
+          onChange={(e) => setInput({ ...input, period: e.target.value })}
+        />
         <Select onValueChange={handleIsShowChange}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Is Show" />
@@ -137,6 +115,12 @@ const FormCreate = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
+        <Input
+          className="col-span-2"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
         <Button type="submit" className="col-span-2">
           Submit
         </Button>
@@ -145,4 +129,4 @@ const FormCreate = () => {
   );
 };
 
-export default FormCreate;
+export default FormCreateOrganization;

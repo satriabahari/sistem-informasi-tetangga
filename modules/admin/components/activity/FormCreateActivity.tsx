@@ -13,12 +13,15 @@ import { Textarea } from "@/common/components/ui/textarea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+import { createClient } from "@/common/utils/client";
+import { toast } from "sonner";
+import FormHeading from "@/common/components/elements/FormHeading";
 
-const FormCreate = () => {
+const FormCreateActivity = () => {
   const [input, setInput] = useState({
     name: "",
     description: "",
-    image: "",
+    image: null as File | null,
     date: new Date().toISOString(),
     time: "",
     location: "",
@@ -31,33 +34,50 @@ const FormCreate = () => {
   const handleCreate = async (e: FormEvent) => {
     e.preventDefault();
 
-    // const formData = new FormData();
-    // formData.append("name", input.name);
-    // formData.append("description", input.description);
-    // formData.append("image", input.image);
-    // formData.append("date", input.date);
-    // formData.append("time", input.time);
-    // formData.append("location", input.location);
-    // formData.append("status", input.status);
-    // formData.append("isShow", input.isShow);
+    const formData = new FormData();
+    formData.append("name", input.name);
+    formData.append("description", input.description);
+    if (input.image) {
+      formData.append("image", input.image);
+    }
+    formData.append("date", input.date);
+    formData.append("time", input.time);
+    formData.append("location", input.location);
+    formData.append("status", input.status);
+    formData.append("isShow", String(input.isShow));
 
-    await axios.post("/api/activity", input);
-
-    router.push("/admin/activity");
+    try {
+      await axios.post("/api/activity", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      router.push("/admin/activity");
+      toast.success("Data successfully added")
+    } catch (error) {
+      console.error("Error creating activity:", error);
+    }
   };
 
-  const handleStatusChange = (value: any) => {
+  const handleStatusChange = (value: string) => {
     setInput((prevInput) => ({ ...prevInput, status: value }));
   };
 
-  const handleIsShowChange = (value: any) => {
-    setInput((prevInput) => ({ ...prevInput, isShow: value }));
+  const handleIsShowChange = (value: string) => {
+    setInput((prevInput) => ({ ...prevInput, isShow: value === "true" }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setInput((prevInput) => ({ ...prevInput, image: files[0] }));
+    }
   };
 
   return (
-    <Container className="py-0 space-y-8">
-      <h1>Form Create Activity</h1>
-      <div className="grid grid-cols-2 items-center justify-center gap-4">
+    <Container className="space-y-8 py-0">
+      <FormHeading title="Form Create Activity"/>
+      <form onSubmit={handleCreate} className="grid grid-cols-2 items-center justify-center gap-4">
         <Input
           placeholder="Name"
           onChange={(e) => setInput({ ...input, name: e.target.value })}
@@ -68,14 +88,15 @@ const FormCreate = () => {
         />
         <Textarea
           className="col-span-2"
+          rows={8}
           placeholder="Description"
           onChange={(e) => setInput({ ...input, description: e.target.value })}
         />
         <Input
           className="col-span-2"
           type="file"
-          placeholder="Image"
-          onChange={(e) => setInput({ ...input, image: e.target.value })}
+          accept="image/*"
+          onChange={handleImageChange}
         />
         <Input
           type="date"
@@ -87,15 +108,14 @@ const FormCreate = () => {
           placeholder="Time"
           onChange={(e) => setInput({ ...input, time: e.target.value })}
         />
-
         <Select onValueChange={handleStatusChange}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="active">active</SelectItem>
-              <SelectItem value="inactive">inactive</SelectItem>
+              <SelectItem value="Active">Active</SelectItem>
+              <SelectItem value="Inactive">Inactiveve</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -110,12 +130,12 @@ const FormCreate = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button className="col-span-2" onClick={handleCreate}>
+        <Button type="submit" className="col-span-2">
           Submit
         </Button>
-      </div>
+      </form>
     </Container>
   );
 };
 
-export default FormCreate;
+export default FormCreateActivity;

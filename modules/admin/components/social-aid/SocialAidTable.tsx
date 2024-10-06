@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,6 @@ import {
 } from "@/common/components/ui/table";
 import { Button } from "@/common/components/ui/button";
 import Link from "next/link";
-import { ActivityProps } from "@/common/types/activity";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,51 +23,43 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/common/components/ui/alert-dialog";
-import { PromotionProps } from "@/common/types/promotion";
+import { SocialAidProps } from "@/common/types/social-aid";
 
-interface PromotionTableProps {
-  data: PromotionProps[];
+interface SocialAidTableProps {
+  data: SocialAidProps[];
   handleDelete: (id: number) => void;
 }
 
-const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
+const SocialAidTable = ({ data, handleDelete }: SocialAidTableProps) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>No</TableHead>
-          <TableHead>Title</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Category</TableHead>
-          <TableHead>Image</TableHead>
-          <TableHead>Building Area</TableHead>
-          <TableHead>Block</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>IsShow</TableHead>
+          <TableHead>Aid Type</TableHead>
+          <TableHead>Aid Amount</TableHead>
+          <TableHead>Distribution Date</TableHead>
+          <TableHead>Note</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((item: PromotionProps, index: number) => (
-          <TableRow key={index}>
-            <TableCell>{item.id}</TableCell>
-            <TableCell>{item.title}</TableCell>
-            <TableCell>{item.description}</TableCell>
-            <TableCell>{item.category}</TableCell>
-            <TableCell>{item.image}</TableCell>
-            <TableCell>{item.building_area}</TableCell>
-            <TableCell>{item.block}</TableCell>
-            <TableCell>{item.price}</TableCell>
-            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>    
+        {data?.map((item: SocialAidProps, index: number) => (
+          <TableRow key={item.id}>
+            <TableCell>{index + 1}</TableCell>
+            <TableCell>{item.transaction_type}</TableCell>
+            <TableCell>{item.amount}</TableCell>
+            <TableCell>
+              {new Date(item.transaction_date).toLocaleDateString()}
+            </TableCell>
+            <TableCell>{item.notes || "N/A"}</TableCell>
             <TableCell className="flex gap-2">
               <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">
-                <Link href={`/admin/promotion/edit/${item.id}`}>Edit</Link>
+                <Link href={`/admin/social-aid/edit/${item.id}`}>Edit</Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">
-                    Delete
-                  </Button>
+                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">Delete</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -77,7 +68,7 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete
-                      the promotion record.
+                      the social aid record.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -96,4 +87,4 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
   );
 };
 
-export default PromotionTable;
+export default SocialAidTable;

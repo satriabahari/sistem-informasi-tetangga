@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
 } from "@/common/components/ui/table";
 import { Button } from "@/common/components/ui/button";
 import Link from "next/link";
-import { ActivityProps } from "@/common/types/activity";
+import { OrganizationProps } from "@/common/types/organization";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,51 +24,48 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/common/components/ui/alert-dialog";
-import { PromotionProps } from "@/common/types/promotion";
+import Image from "next/image";
+import { NeighborhoodFundProps } from "@/common/types/neighborhood-fund";
 
-interface PromotionTableProps {
-  data: PromotionProps[];
+interface NeighborhoodFundTableProps {
+  data: NeighborhoodFundProps[];
   handleDelete: (id: number) => void;
 }
 
-const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
+const NeighborhoodFundTable = ({ data, handleDelete }: NeighborhoodFundTableProps) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>No</TableHead>
-          <TableHead>Title</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Category</TableHead>
-          <TableHead>Image</TableHead>
-          <TableHead>Building Area</TableHead>
-          <TableHead>Block</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>IsShow</TableHead>
+          <TableHead>ID</TableHead>
+          <TableHead>Recipient Name</TableHead>
+          <TableHead>Address</TableHead>
+          <TableHead>Aid Type</TableHead>
+          <TableHead>Aid Amount</TableHead>
+          <TableHead>Distribution Date</TableHead>
+          <TableHead>Note</TableHead>
+          <TableHead>Is Show</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((item: PromotionProps, index: number) => (
+        {data?.map((item: NeighborhoodFundProps, index: number) => (
           <TableRow key={index}>
             <TableCell>{item.id}</TableCell>
-            <TableCell>{item.title}</TableCell>
-            <TableCell>{item.description}</TableCell>
-            <TableCell>{item.category}</TableCell>
-            <TableCell>{item.image}</TableCell>
-            <TableCell>{item.building_area}</TableCell>
-            <TableCell>{item.block}</TableCell>
-            <TableCell>{item.price}</TableCell>
-            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>    
+            <TableCell>{item.recipient_name}</TableCell>
+            <TableCell>{item.address}</TableCell>
+            <TableCell>{item.aid_type}</TableCell>
+            <TableCell>{item.aid_amount}</TableCell>
+            <TableCell>{new Date(item.distribution_date).toLocaleDateString()}</TableCell>
+            <TableCell>{item.notes}</TableCell>
+            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>
             <TableCell className="flex gap-2">
               <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">
-                <Link href={`/admin/promotion/edit/${item.id}`}>Edit</Link>
+                <Link href={`/admin/neighborhood-fund/edit/${item.id}`}>Edit</Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">
-                    Delete
-                  </Button>
+                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">Delete</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -77,7 +74,7 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete
-                      the promotion record.
+                      the neighborhood fund record.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -96,4 +93,4 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
   );
 };
 
-export default PromotionTable;
+export default NeighborhoodFundTable;

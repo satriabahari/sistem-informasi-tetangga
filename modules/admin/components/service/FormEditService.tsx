@@ -14,22 +14,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select";
-import { Textarea } from "@/common/components/ui/textarea";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Textarea } from "@/common/components/ui/textarea";
+import { Label } from "@/common/components/ui/label";
 import FormHeading from "@/common/components/elements/FormHeading";
 
-const FormEdit = ({ params }: { params: { slug: string } }) => {
-  const { data, error } = useSWR(`/api/promotion/${params.slug}`, fetcher);
+const FormEditService = ({ params }: { params: { slug: string } }) => {
+  const { data, error } = useSWR(`/api/service/${params.slug}`, fetcher);
   const [input, setInput] = useState({
     title: "",
     description: "",
+    letter_no: "",
     image: null as File | null,
     currentImage: "",
-    category: "",
-    building_area: 0,
-    block: "",
-    price: 0,
+    pdf: null as File | null,
+    currentPdf: "",
     isShow: true,
   });
 
@@ -40,13 +40,12 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
       setInput({
         title: data.title || "",
         description: data.description || "",
+        letter_no: data.letter_no || "",
         image: null,
         currentImage: data.image || "",
-        category: data.category || "",
-        building_area: data.building_area || 0,
-        block: data.block || "",
-        price: data.price || 0,
-        isShow: data.isShow,
+        pdf: null,
+        currentPdf: data.pdf || "",
+        isShow: data.isShow ?? true,
       });
     }
   }, [data]);
@@ -56,25 +55,25 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
     const formData = new FormData();
     formData.append("title", input.title);
     formData.append("description", input.description);
+    formData.append("letter_no", input.letter_no);
     if (input.image) {
       formData.append("image", input.image);
     }
-    formData.append("category", input.category);
-    formData.append("building_area", String(input.building_area));
-    formData.append("block", input.block);
-    formData.append("price", String(input.price));
+    if (input.pdf) {
+      formData.append("pdf", input.pdf);
+    }
     formData.append("isShow", String(input.isShow));
 
     try {
-      await axios.patch(`/api/promotion/${params.slug}`, formData, {
+      await axios.patch(`/api/service/${params.slug}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push("/admin/promotion");
+      router.push("/admin/service");
       toast.success("Data successfully updated");
     } catch (error) {
-      console.error("Error updating promotion:", error);
+      console.error("Error updating service:", error);
     }
   };
 
@@ -85,8 +84,11 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
     }
   };
 
-  const handleCategoryChange = (value: string) => {
-    setInput((prevInput) => ({ ...prevInput, category: value }));
+  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setInput({ ...input, pdf: file });
+    }
   };
 
   const handleIsShowChange = (value: string) => {
@@ -95,7 +97,7 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
 
   return (
     <Container className="space-y-8 py-0">
-      <FormHeading title="Form Edit Promotion" />
+      <FormHeading title="Form Edit Service"/>
       <form
         onSubmit={handleUpdate}
         className="grid grid-cols-2 items-center justify-center gap-4"
@@ -106,52 +108,35 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
           value={input.title}
         />
         <Input
-          placeholder="Block"
-          onChange={(e) => setInput({ ...input, block: e.target.value })}
-          value={input.block}
+          placeholder="Letter No"
+          onChange={(e) => setInput({ ...input, letter_no: e.target.value })}
+          value={input.letter_no}
         />
         <Textarea
-          rows={8}
           placeholder="Description"
           className="col-span-2"
+          rows={8}
           onChange={(e) => setInput({ ...input, description: e.target.value })}
           value={input.description}
         />
-        <div className="col-span-2">
+
+        <div>
+          <Label className="text-neutral-700 dark:text-neutral-300">PDF</Label>
+          <Input
+            type="file"
+            accept="application/pdf"
+            onChange={handleImageChange}
+          />
+        </div>
+        <div>
+          <Label className="text-neutral-700 dark:text-neutral-300">
+            Image
+          </Label>
           <Input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
-        <Input
-          type="number"
-          placeholder="Building Area"
-          onChange={(e) =>
-            setInput({ ...input, building_area: Number(e.target.value) })
-          }
-          value={input.building_area}
-        />
-
-        <Input
-          type="number"
-          placeholder="Price"
-          onChange={(e) =>
-            setInput({ ...input, price: Number(e.target.value) })
-          }
-          value={input.price}
-        />
-        <Select onValueChange={handleCategoryChange} value={input.category}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="Real Estate">Real Estate</SelectItem>
-              <SelectItem value="Commercial">Commercial</SelectItem>
-              <SelectItem value="Residential">Residential</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
         <Select onValueChange={handleIsShowChange} value={String(input.isShow)}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select is show" />
+          <SelectTrigger className="col-span-2 w-full">
+            <SelectValue placeholder="Is Show" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -168,4 +153,4 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default FormEdit;
+export default FormEditService;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
 } from "@/common/components/ui/table";
 import { Button } from "@/common/components/ui/button";
 import Link from "next/link";
-import { ActivityProps } from "@/common/types/activity";
+import { ServiceProps } from "@/common/types/service";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,14 +24,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/common/components/ui/alert-dialog";
-import { PromotionProps } from "@/common/types/promotion";
+import Image from "next/image";
 
-interface PromotionTableProps {
-  data: PromotionProps[];
+interface ServiceTableProps {
+  data: ServiceProps[];
   handleDelete: (id: number) => void;
 }
 
-const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
+const ServiceTable = ({ data, handleDelete }: ServiceTableProps) => {
   return (
     <Table>
       <TableHeader>
@@ -39,31 +39,27 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
           <TableHead>No</TableHead>
           <TableHead>Title</TableHead>
           <TableHead>Description</TableHead>
-          <TableHead>Category</TableHead>
+          <TableHead>Letter No</TableHead>
           <TableHead>Image</TableHead>
-          <TableHead>Building Area</TableHead>
-          <TableHead>Block</TableHead>
-          <TableHead>Price</TableHead>
+          <TableHead>PDF</TableHead>
           <TableHead>IsShow</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((item: PromotionProps, index: number) => (
+        {data?.map((item: ServiceProps, index: number) => (
           <TableRow key={index}>
-            <TableCell>{item.id}</TableCell>
+            <TableCell>{index + 1}</TableCell>
             <TableCell>{item.title}</TableCell>
             <TableCell>{item.description}</TableCell>
-            <TableCell>{item.category}</TableCell>
+            <TableCell>{item.letter_no}</TableCell>
             <TableCell>{item.image}</TableCell>
-            <TableCell>{item.building_area}</TableCell>
-            <TableCell>{item.block}</TableCell>
-            <TableCell>{item.price}</TableCell>
-            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>    
+            <TableCell>{item.pdf}</TableCell>
+            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>
             <TableCell className="flex gap-2">
-              <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">
-                <Link href={`/admin/promotion/edit/${item.id}`}>Edit</Link>
-              </Button>
+              <Link href={`/admin/service/edit/${item.id}`} passHref>
+                <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">Edit</Button>
+              </Link>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">
@@ -77,7 +73,7 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete
-                      the promotion record.
+                      the service record.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -96,4 +92,4 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
   );
 };
 
-export default PromotionTable;
+export default ServiceTable;

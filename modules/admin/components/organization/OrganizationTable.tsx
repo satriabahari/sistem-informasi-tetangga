@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
 } from "@/common/components/ui/table";
 import { Button } from "@/common/components/ui/button";
 import Link from "next/link";
-import { ActivityProps } from "@/common/types/activity";
+import { OrganizationProps } from "@/common/types/organization";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,51 +24,49 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/common/components/ui/alert-dialog";
-import { PromotionProps } from "@/common/types/promotion";
+import Image from "next/image";
 
-interface PromotionTableProps {
-  data: PromotionProps[];
+interface OrganizationTableProps {
+  data: OrganizationProps[];
   handleDelete: (id: number) => void;
 }
 
-const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
+const OrganizationTable = ({ data, handleDelete }: OrganizationTableProps) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>No</TableHead>
-          <TableHead>Title</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Category</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Address</TableHead>
+          <TableHead>Position</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Phone Number</TableHead>
+          <TableHead>Period</TableHead>
           <TableHead>Image</TableHead>
-          <TableHead>Building Area</TableHead>
-          <TableHead>Block</TableHead>
-          <TableHead>Price</TableHead>
           <TableHead>IsShow</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((item: PromotionProps, index: number) => (
+        {data?.map((item: OrganizationProps, index: number) => (
           <TableRow key={index}>
             <TableCell>{item.id}</TableCell>
-            <TableCell>{item.title}</TableCell>
-            <TableCell>{item.description}</TableCell>
-            <TableCell>{item.category}</TableCell>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.address}</TableCell>
+            <TableCell>{item.position}</TableCell>
+            <TableCell>{item.email}</TableCell>
+            <TableCell>{item.phone_number}</TableCell>
+            <TableCell>{item.period}</TableCell>
             <TableCell>{item.image}</TableCell>
-            <TableCell>{item.building_area}</TableCell>
-            <TableCell>{item.block}</TableCell>
-            <TableCell>{item.price}</TableCell>
-            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>    
+            <TableCell>{item.isShow ? "Yes" : "No"}</TableCell>
             <TableCell className="flex gap-2">
               <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">
-                <Link href={`/admin/promotion/edit/${item.id}`}>Edit</Link>
+                <Link href={`/admin/organization/edit/${item.id}`}>Edit</Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">
-                    Delete
-                  </Button>
+                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">Delete</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -77,7 +75,7 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete
-                      the promotion record.
+                      the organization record.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -96,4 +94,4 @@ const PromotionTable = ({ data, handleDelete }: PromotionTableProps) => {
   );
 };
 
-export default PromotionTable;
+export default OrganizationTable;

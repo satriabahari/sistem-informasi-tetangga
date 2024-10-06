@@ -19,33 +19,32 @@ import Image from "next/image";
 import { toast } from "sonner";
 import FormHeading from "@/common/components/elements/FormHeading";
 
-const FormEdit = ({ params }: { params: { slug: string } }) => {
-  const { data, error } = useSWR(`/api/promotion/${params.slug}`, fetcher);
+const FormEditActivity = ({ params }: { params: { slug: string } }) => {
+  const { data, error } = useSWR(`/api/activity/${params.slug}`, fetcher);
   const [input, setInput] = useState({
-    title: "",
+    name: "",
     description: "",
     image: null as File | null,
     currentImage: "",
-    category: "",
-    building_area: 0,
-    block: "",
-    price: 0,
+    date: "",
+    time: "",
+    location: "",
+    status: "",
     isShow: true,
   });
-
   const router = useRouter();
 
   useEffect(() => {
     if (data) {
       setInput({
-        title: data.title || "",
+        name: data.name || "",
         description: data.description || "",
         image: null,
         currentImage: data.image || "",
-        category: data.category || "",
-        building_area: data.building_area || 0,
-        block: data.block || "",
-        price: data.price || 0,
+        date: data.date || "",
+        time: data.time || "",
+        location: data.location || "",
+        status: data.status || "",
         isShow: data.isShow,
       });
     }
@@ -54,27 +53,27 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
   const handleUpdate = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", input.title);
+    formData.append("name", input.name);
     formData.append("description", input.description);
     if (input.image) {
       formData.append("image", input.image);
     }
-    formData.append("category", input.category);
-    formData.append("building_area", String(input.building_area));
-    formData.append("block", input.block);
-    formData.append("price", String(input.price));
+    formData.append("date", input.date);
+    formData.append("time", input.time);
+    formData.append("location", input.location);
+    formData.append("status", input.status);
     formData.append("isShow", String(input.isShow));
 
     try {
-      await axios.patch(`/api/promotion/${params.slug}`, formData, {
+      await axios.patch(`/api/activity/${params.slug}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push("/admin/promotion");
+      router.push("/admin/activity");
       toast.success("Data successfully updated");
     } catch (error) {
-      console.error("Error updating promotion:", error);
+      console.error("Error updating activity:", error);
     }
   };
 
@@ -85,8 +84,8 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
     }
   };
 
-  const handleCategoryChange = (value: string) => {
-    setInput((prevInput) => ({ ...prevInput, category: value }));
+  const handleStatusChange = (value: string) => {
+    setInput((prevInput) => ({ ...prevInput, status: value }));
   };
 
   const handleIsShowChange = (value: string) => {
@@ -95,20 +94,20 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
 
   return (
     <Container className="space-y-8 py-0">
-      <FormHeading title="Form Edit Promotion" />
+      <FormHeading title="Form Edit Activity" />
       <form
         onSubmit={handleUpdate}
         className="grid grid-cols-2 items-center justify-center gap-4"
       >
         <Input
-          placeholder="Title"
-          onChange={(e) => setInput({ ...input, title: e.target.value })}
-          value={input.title}
+          placeholder="Name"
+          onChange={(e) => setInput({ ...input, name: e.target.value })}
+          value={input.name}
         />
         <Input
-          placeholder="Block"
-          onChange={(e) => setInput({ ...input, block: e.target.value })}
-          value={input.block}
+          placeholder="Location"
+          onChange={(e) => setInput({ ...input, location: e.target.value })}
+          value={input.location}
         />
         <Textarea
           rows={8}
@@ -121,31 +120,25 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
           <Input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
         <Input
-          type="number"
-          placeholder="Building Area"
-          onChange={(e) =>
-            setInput({ ...input, building_area: Number(e.target.value) })
-          }
-          value={input.building_area}
+          type="date"
+          placeholder="Date"
+          onChange={(e) => setInput({ ...input, date: e.target.value })}
+          value={input.date}
         />
-
         <Input
-          type="number"
-          placeholder="Price"
-          onChange={(e) =>
-            setInput({ ...input, price: Number(e.target.value) })
-          }
-          value={input.price}
+          type="time"
+          placeholder="Time"
+          onChange={(e) => setInput({ ...input, time: e.target.value })}
+          value={input.time}
         />
-        <Select onValueChange={handleCategoryChange} value={input.category}>
+        <Select onValueChange={handleStatusChange} value={input.status}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Category" />
+            <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="Real Estate">Real Estate</SelectItem>
-              <SelectItem value="Commercial">Commercial</SelectItem>
-              <SelectItem value="Residential">Residential</SelectItem>
+              <SelectItem value="Active">Active</SelectItem>
+              <SelectItem value="Inactive">Inactive</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -156,7 +149,7 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="true">True</SelectItem>
-              <SelectItem value="false">False</SelectItem>
+              <SelectItem value="false">false</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -168,4 +161,4 @@ const FormEdit = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default FormEdit;
+export default FormEditActivity;

@@ -2,6 +2,7 @@ import Container from "@/common/components/elements/Container";
 import FormHeading from "@/common/components/elements/FormHeading";
 import { Button } from "@/common/components/ui/button";
 import { Input } from "@/common/components/ui/input";
+import { Label } from "@/common/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -16,15 +17,13 @@ import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { toast } from "sonner";
 
-const FormCreate = () => {
+const FormCreateService = () => {
   const [input, setInput] = useState({
     title: "",
     description: "",
+    letter_no: "",
     image: null as File | null,
-    category: "",
-    building_area: 0,
-    block: "",
-    price: 0,
+    pdf: null as File | null,
     isShow: true,
   });
 
@@ -36,30 +35,26 @@ const FormCreate = () => {
     const formData = new FormData();
     formData.append("title", input.title);
     formData.append("description", input.description);
+    formData.append("letter_no", input.letter_no);
     if (input.image) {
       formData.append("image", input.image);
     }
-    formData.append("category", input.category);
-    formData.append("building_area", String(input.building_area));
-    formData.append("block", input.block);
-    formData.append("price", String(input.price));
+    if (input.pdf) {
+      formData.append("pdf", input.pdf);
+    }
     formData.append("isShow", String(input.isShow));
 
     try {
-      await axios.post("/api/promotion", formData, {
+      await axios.post("/api/service", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push("/admin/promotion");
+      router.push("/admin/service");
       toast.success("Data successfully added");
     } catch (error) {
-      console.error("Error creating promotion:", error);
+      console.error("Error creating service:", error);
     }
-  };
-
-  const handleCategoryChange = (value: string) => {
-    setInput((prevInput) => ({ ...prevInput, category: value }));
   };
 
   const handleIsShowChange = (value: string) => {
@@ -73,9 +68,16 @@ const FormCreate = () => {
     }
   };
 
+  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setInput((prevInput) => ({ ...prevInput, pdf: files[0] }));
+    }
+  };
+
   return (
     <Container className="space-y-8 py-0">
-      <FormHeading title="Form Create Promotion" />
+      <FormHeading title="Form Create Service" />
       <form
         onSubmit={handleCreate}
         className="grid grid-cols-2 items-center justify-center gap-4"
@@ -85,49 +87,31 @@ const FormCreate = () => {
           onChange={(e) => setInput({ ...input, title: e.target.value })}
         />
         <Input
-          placeholder="Block"
-          onChange={(e) => setInput({ ...input, block: e.target.value })}
+          placeholder="Letter No."
+          onChange={(e) => setInput({ ...input, letter_no: e.target.value })}
         />
         <Textarea
-          className="col-span-2"
           rows={8}
           placeholder="Description"
+          className="col-span-2"
           onChange={(e) => setInput({ ...input, description: e.target.value })}
         />
-        <Input
-          className="col-span-2"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        />{" "}
-        <Input
-          type="number"
-          placeholder="Building Area"
-          onChange={(e) =>
-            setInput({ ...input, building_area: Number(e.target.value) })
-          }
-        />
-        <Input
-          type="number"
-          placeholder="Price"
-          onChange={(e) =>
-            setInput({ ...input, price: Number(e.target.value) })
-          }
-        />
-        <Select onValueChange={handleCategoryChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="Real Estate">Real Estate</SelectItem>
-              <SelectItem value="Commercial">Commercial</SelectItem>
-              <SelectItem value="Residential">Residential</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="space-y-2">
+          <Label className="text-neutral-700 dark:text-neutral-300">
+            Image
+          </Label>
+          <Input type="file" accept="image/*" onChange={handleImageChange} />
+        </div>
+        <div className="space-y-2">
+          <Label className="text-neutral-700 dark:text-neutral-300">PDF</Label>
+          <Input
+            type="file"
+            accept="application/pdf"
+            onChange={handlePdfChange}
+          />
+        </div>
         <Select onValueChange={handleIsShowChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="col-span-2 w-full">
             <SelectValue placeholder="Is Show" />
           </SelectTrigger>
           <SelectContent>
@@ -145,4 +129,4 @@ const FormCreate = () => {
   );
 };
 
-export default FormCreate;
+export default FormCreateService;

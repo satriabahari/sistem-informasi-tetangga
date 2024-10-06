@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,6 +13,17 @@ import {
 import { Button } from "@/common/components/ui/button";
 import Link from "next/link";
 import { ActivityProps } from "@/common/types/activity";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/common/components/ui/alert-dialog";
 
 interface ActivityTableProps {
   data: ActivityProps[];
@@ -20,7 +33,6 @@ interface ActivityTableProps {
 const ActivityTable = ({ data, handleDelete }: ActivityTableProps) => {
   return (
     <Table>
-      {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
       <TableHeader>
         <TableRow>
           <TableHead>No</TableHead>
@@ -32,7 +44,7 @@ const ActivityTable = ({ data, handleDelete }: ActivityTableProps) => {
           <TableHead>Time</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>IsShow</TableHead>
-          <TableHead>Actios</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -46,12 +58,37 @@ const ActivityTable = ({ data, handleDelete }: ActivityTableProps) => {
             <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
             <TableCell>{item.time}</TableCell>
             <TableCell>{item.status}</TableCell>
-            <TableCell>{item.isShow}</TableCell>
+            <TableCell>{item.isShow ? "Yes" : " No"}</TableCell>
             <TableCell className="flex gap-2">
-              <Button>
-                <Link href={`/admin/activity/edit/${item.id}`}>Edit</Link>
-              </Button>
-              <Button onClick={() => handleDelete(item.id)}>Delete</Button>
+              <Link href={`/admin/activity/edit/${item.id}`}>
+                <Button className="bg-green-500 hover:bg-green-600 dark:bg-green-500 dark:text-neutral-50 dark:hover:bg-green-600">
+                  Edit
+                </Button>
+              </Link>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:text-neutral-50 dark:hover:bg-red-600">
+                    Delete
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      the activity record.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleDelete(item.id)}>
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </TableCell>
           </TableRow>
         ))}
