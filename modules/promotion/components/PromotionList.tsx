@@ -5,25 +5,30 @@ import ActivityCard from "./PromotionCard";
 import useSWR from "swr";
 import { fetcher } from "@/services/fetcher";
 import { PromotionProps } from "@/common/types/promotion";
+import PromotionSkeletonCard from "./PromotionSkeletonCard";
+import PromotionCard from "./PromotionCard";
 
 const PromotionList = () => {
-  const { data, isLoading, error } = useSWR("/api/promotion", fetcher);
+  const { data, isLoading } = useSWR("/api/promotion", fetcher);
 
   const filteredPromotions: PromotionProps[] = data
     ?.filter((item: PromotionProps) => item?.isShow)
     .sort((a: PromotionProps, b: PromotionProps) => b.id - a.id);
 
-  console.log(filteredPromotions);
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {filteredPromotions?.map((blog, index) => (
-        <ActivityCard
-          key={index}
-          {...blog}
-          data-aos="fade-up"
-          data-aos-delay={index * 100 + 300}
-        />
-      ))}
+    <div className="grid w-full grid-cols-4 gap-4">
+      {!isLoading
+        ? filteredPromotions?.map((blog, index) => (
+            <PromotionCard
+              key={index}
+              {...blog}
+              data-aos="fade-up"
+              data-aos-delay={index * 100 + 300}
+            />
+          ))
+        : Array.from({ length: 8 }).map((_, index) => (
+            <PromotionSkeletonCard key={index} />
+          ))}
     </div>
   );
 };
