@@ -4,12 +4,9 @@ import React from "react";
 
 const LoginPage = () => {
   return (
-    <div>
+    <>
       <Login />
-    </div>
-    // <Container>
-    //   <Login />
-    // </Container>
+    </>
   );
 };
 

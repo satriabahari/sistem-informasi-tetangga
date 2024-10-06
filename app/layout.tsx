@@ -6,6 +6,7 @@ import NextTopLoader from "nextjs-toploader";
 import ThemeProviderContext from "@/stores/theme";
 import { getServerSession } from "next-auth";
 import NextAuthProvider from "@/SessionProvider";
+import { Toaster } from "@/common/components/ui/sonner";
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ const RootLayout = async ({
         <NextAuthProvider session={session}>
           <ThemeProviderContext>
             <Layouts>{children}</Layouts>
+            <Toaster position="top-right" />
           </ThemeProviderContext>
         </NextAuthProvider>
       </body>

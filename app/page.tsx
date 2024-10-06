@@ -3,7 +3,7 @@ import Home from "@/modules/home";
 
 const HomePage = () => {
   return (
-    <Container className="pt-36">
+    <Container>
       <Home />
     </Container>
   );

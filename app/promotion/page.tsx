@@ -5,7 +5,7 @@ import React from "react";
 
 const PromotionPage = () => {
   return (
-    <Container className="pb-28 pt-44">
+    <Container className="pt-14">
       <PageHeading
         title="My Promotion"
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
