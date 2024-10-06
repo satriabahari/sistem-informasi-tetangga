@@ -1,14 +1,24 @@
-import CORRESPONDENCE_ITEMS from "@/common/constants/correspondence";
+"use client";
+
 import React from "react";
 import ServiceCard from "./ServiceCard";
+import useSWR from "swr";
+import { fetcher } from "@/services/fetcher";
+import { CorrespondenceItemProps } from "@/common/types/correspondence";
+import ServiceSkeletonCard from "./ServiceSkeletonCard";
 
 const ServiceList = () => {
-  const filteredServices = CORRESPONDENCE_ITEMS.filter((item) => item.is_show);
+  const { data, isLoading } = useSWR("/api/service", fetcher);
+
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {filteredServices.map((item, index) => (
-        <ServiceCard key={index} {...item} />
-      ))}
+    <div className="grid grid-cols-4 gap-4 w-full">
+      {!isLoading
+        ? data?.map((item: CorrespondenceItemProps, index: number) => (
+            <ServiceCard key={index} {...item} />
+          ))
+        : Array.from({ length: 8 }).map((_, index) => (
+            <ServiceSkeletonCard key={index} />
+          ))}
     </div>
   );
 };
