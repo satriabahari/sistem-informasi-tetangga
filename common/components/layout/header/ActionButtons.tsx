@@ -1,11 +1,14 @@
 import ThemeButton from "../../elements/ThemeButton";
 import LoginButton from "../../elements/LoginButton";
+import { useSession } from "next-auth/react";
+import LogoutButton from "../../elements/LogoutButton";
 
 const ActionButtons = () => {
+  const { data: session } = useSession();
   return (
-    <div className="flex items-center justify-center gap-8">
+    <div className="flex items-center justify-center gap-4">
       <ThemeButton />
-      <LoginButton />
+      {session ? <LogoutButton /> : <LoginButton />}
     </div>
   );
 };

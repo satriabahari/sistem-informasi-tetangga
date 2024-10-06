@@ -1,11 +1,18 @@
 import cn from "@/common/libs/clsxm";
 import { MenuItemProps } from "@/common/types/menu";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const MenuItem = ({ title, href }: MenuItemProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
+  const { data: session } = useSession();
+
+  const isAdminMenu = href.startsWith("/admin");
+  const shouldShowMenu = !isAdminMenu || (isAdminMenu && session);
+
+  if (!shouldShowMenu) return null;
 
   return (
     <Link
