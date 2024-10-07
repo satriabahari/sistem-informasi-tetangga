@@ -24,6 +24,7 @@ const ServiceCard = ({
     ? "/images/hero.jpg"
     : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/service-image/${image}`;
 
+    
   const handleDownload = async () => {
     const { data, error } = await supabase.storage
       .from("service-pdf")

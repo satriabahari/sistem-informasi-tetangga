@@ -2,9 +2,14 @@ import React from "react";
 
 const Vision = () => {
   return (
-    <div className="text-center space-y-4">
+    <div
+      className="space-y-4 text-center"
+      data-aos="fade-right"
+      data-aos-delay="200"
+      data-aoa-anchor="#about"
+    >
       <h3 className="text-2xl font-medium">Visi</h3>
-      <p className="dark:text-neutral-400 ">
+      <p className="text-sm leading-relaxed dark:text-neutral-400 lg:text-base">
         Mewujudkan lingkungan RT yang bersih, aman, harmonis, dan berdaya saing
         tinggi, di mana setiap warga merasa dihargai dan berkontribusi aktif
         dalam menciptakan kesejahteraan bersama. Kami berkomitmen untuk

@@ -10,11 +10,21 @@ const missions = [
 
 const Mission = () => {
   return (
-    <div className="space-y-4">
-      <h3 className="text-2xl font-medium text-center">Misi</h3>
+    <div
+      className="space-y-4"
+      data-aos="fade-left"
+      data-aos-delay="200"
+      data-aoa-anchor="#about"
+    >
+      <h3 className="text-center text-2xl font-medium">Misi</h3>
       <ul className="list-disc space-y-2">
         {missions.map((mission, index) => (
-          <li key={index} className="dark:text-neutral-400">{mission}</li>
+          <li
+            key={index}
+            className="text-sm leading-relaxed dark:text-neutral-400 lg:text-base"
+          >
+            {mission}
+          </li>
         ))}
       </ul>
     </div>

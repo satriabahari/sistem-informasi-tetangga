@@ -10,7 +10,9 @@ const Header = () => {
     >
       <div className="flex items-center justify-between px-8 py-3">
         <Logo />
-        <MenuItemList />
+        <div className="hidden lg:block">
+          <MenuItemList />
+        </div>
         <ActionButtons />
       </div>
     </header>

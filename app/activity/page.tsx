@@ -8,7 +8,7 @@ const ActivityPage = () => {
     <Container className="pt-14">
       <PageHeading
         title="Aktivitas di lingkugan RT"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
+        // description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
       />
       <Activity />
     </Container>

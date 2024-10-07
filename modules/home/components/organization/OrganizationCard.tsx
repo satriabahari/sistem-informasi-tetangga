@@ -25,7 +25,7 @@ const OrganizationCard = ({
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-2">
         <Image
-          src={"/images/hero.jpg"}
+          src={image}
           alt={name}
           width={300}
           height={300}

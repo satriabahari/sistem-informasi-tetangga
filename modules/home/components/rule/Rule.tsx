@@ -6,10 +6,15 @@ import RuleList from "./RuleList";
 
 const Rule = () => {
   return (
-    <SubContainer className="space-y-16">
-      <SectionHeading title="Peraturan" />
+    <SubContainer id="rule" className="space-y-16">
+      <SectionHeading
+        title="Peraturan"
+        data-aos="fade-down"
+        data-aos-delay="200"
+        data-aoa-anchor="#rule"
+      />
       {/* <SectionSubHeading>test</SectionSubHeading> */}
-      <RuleList/>
+      <RuleList />
     </SubContainer>
   );
 };

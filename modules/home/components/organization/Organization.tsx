@@ -6,10 +6,15 @@ import OrganizationList from "./OrganizationList";
 
 const Organization = () => {
   return (
-    <SubContainer className="space-y-16">
-      <SectionHeading title="Struktur Organisasi" />
+    <SubContainer id="organization" className="space-y-16">
+      <SectionHeading
+        title="Struktur Organisasi"
+        data-aos="fade-down"
+        data-aos-delay="200"
+        data-aoa-anchor="#organization"
+      />
       {/* <SectionSubHeading>test</SectionSubHeading> */}
-      <OrganizationList/>
+      <OrganizationList />
     </SubContainer>
   );
 };

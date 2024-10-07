@@ -6,7 +6,7 @@ const iconSize = 20;
 const INFO_ITEMS: InfoItemProps[] = [
   {
     title: "Jumlah Penduduk",
-    description: "Jumlah total penduduk yang tinggal di RT 02.",
+    description: "Jumlah total penduduk yang tinggal di RT 001.",
     icon: <FaUsers size={iconSize} />,
     value: 150,
     unit: "orang",
@@ -14,7 +14,7 @@ const INFO_ITEMS: InfoItemProps[] = [
   },
   {
     title: "Jumlah Kepala Keluarga",
-    description: "Total jumlah kepala keluarga di RT 02.",
+    description: "Total jumlah kepala keluarga di RT 001.",
     icon: <FaHome size={iconSize} />,
     value: 45,
     unit: "KK",
@@ -22,7 +22,7 @@ const INFO_ITEMS: InfoItemProps[] = [
   },
   {
     title: "Luas Wilayah",
-    description: "Luas wilayah RT 02 dalam kilometer persegi.",
+    description: "Luas wilayah RT 001 dalam kilometer persegi.",
     icon: <FaChartPie size={iconSize} />,
     value: 2.5,
     unit: "km²",
@@ -30,7 +30,7 @@ const INFO_ITEMS: InfoItemProps[] = [
   },
   {
     title: "Jumlah Rumah",
-    description: "Jumlah rumah yang ada di RT 02.",
+    description: "Jumlah rumah yang ada di RT 001.",
     icon: <FaCity size={iconSize} />,
     value: 60,
     unit: "unit",

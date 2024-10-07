@@ -22,6 +22,7 @@ const ActivityCard = ({
   const previewURL = !image
     ? "/images/hero.jpg"
     : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/activity/${image}`;
+
   const formattedDate = new Date(date).toLocaleDateString();
   return (
     <Card className="flex h-full flex-col justify-between">

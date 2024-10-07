@@ -16,7 +16,7 @@ const ActivityList = () => {
   );
 
   return (
-    <div className="grid grid-cols-3 gap-4 w-full">
+    <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-4 gap-8 w-full">
       {!isLoading
         ? filteredActivities?.map((activity, index) => (
             <ActivityCard key={index} {...activity} />

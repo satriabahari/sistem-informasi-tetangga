@@ -6,8 +6,13 @@ import InfoList from "./InfoList";
 
 const Info = () => {
   return (
-    <SubContainer className="space-y-16">
-      <SectionHeading title="Info" />
+    <SubContainer id="info" className="space-y-16">
+      <SectionHeading
+        title="Info"
+        data-aos="fade-down"
+        data-aos-delay="200"
+        data-aoa-anchor="#info"
+      />
       {/* <SectionSubHeading>test</SectionSubHeading> */}
       <InfoList />
     </SubContainer>

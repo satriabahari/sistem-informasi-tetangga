@@ -16,7 +16,7 @@ const PromotionList = () => {
     .sort((a: PromotionProps, b: PromotionProps) => b.id - a.id);
 
   return (
-    <div className="grid w-full grid-cols-4 gap-4">
+    <div className="grid w-full lg:grid-cols-4 lg:gap-4 gap-8">
       {!isLoading
         ? filteredPromotions?.map((blog, index) => (
             <PromotionCard

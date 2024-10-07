@@ -2,9 +2,23 @@ import { Card, CardContent, CardHeader } from "@/common/components/ui/card";
 import { InfoItemProps } from "@/common/types/info";
 import React from "react";
 
-const InfoCard = ({ title, description, icon, value, unit }: InfoItemProps) => {
+interface InfoCardProps extends InfoItemProps {
+  [propname: string]: React.ReactNode | string | undefined;
+}
+
+const InfoCard = ({
+  title,
+  description,
+  icon,
+  value,
+  unit,
+  ...others
+}: InfoCardProps) => {
   return (
-    <Card className="group flex flex-col items-center justify-center gap-2 p-6 text-center hover:scale-110">
+    <Card
+      className="group flex flex-col items-center justify-center gap-2 p-6 text-center hover:scale-110"
+      {...others}
+    >
       <CardHeader className="flex flex-col items-center justify-center gap-1 p-0">
         <div className="w-fit rounded-md p-2 duration-300 dark:bg-neutral-700 dark:group-hover:bg-amber-500">
           <div>{icon}</div>

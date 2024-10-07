@@ -24,15 +24,19 @@ const PromotionCard = ({
   price,
   ...others
 }: PromotionProps) => {
+  const previewURL = !image
+    ? "/images/hero.jpg"
+    : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/promotion/${image}`;
+
   return (
     <Card className="flex h-full flex-col justify-between">
       <CardHeader>
         <Image
-          src={"/images/hero.jpg"}
+          src={previewURL}
           width={300}
           height={200}
           alt={title}
-          className="w-full rounded-lg"
+          className="w-full rounded-lg h-[200px] object-cover"  
         />
       </CardHeader>
       <CardContent className="space-y-4">
@@ -60,11 +64,11 @@ const PromotionCard = ({
           </div>
         </div>
       </CardContent>
-      <CardFooter>
+      {/* <CardFooter>
         <Button className="w-full rounded-full px-4 py-2 dark:bg-neutral-700 dark:text-neutral-300">
           Detail
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

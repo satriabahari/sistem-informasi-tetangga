@@ -8,7 +8,7 @@ const PromotionPage = () => {
     <Container className="pt-14">
       <PageHeading
         title="My Promotion"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
+        // description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
       />
       <Promotion />
     </Container>

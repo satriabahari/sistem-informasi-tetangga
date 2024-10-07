@@ -11,7 +11,7 @@ const ServiceList = () => {
   const { data, isLoading } = useSWR("/api/service", fetcher);
 
   return (
-    <div className="grid grid-cols-4 gap-4 w-full">
+    <div className="grid lg:grid-cols-4 lg:gap-4 grid-cols-1 gap-8 w-full">
       {!isLoading
         ? data?.map((item: CorrespondenceItemProps, index: number) => (
             <ServiceCard key={index} {...item} />

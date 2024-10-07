@@ -8,7 +8,7 @@ import Rule from "./rule/Rule";
 const Home = () => {
   return (
     // <SubContainer className="flex flex-col items-center lg:gap-8 gap-6" id="hero">
-    <div className="space-y-32">
+    <div className="space-y-32 lg:overflow-hidden">
       <Hero />
       <About />
       <Info />

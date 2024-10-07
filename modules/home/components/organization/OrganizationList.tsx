@@ -8,11 +8,19 @@ import OrganizationCard from "./OrganizationCard";
 
 const OrganizationList = () => {
   const { data } = useSWR("/api/organization", fetcher);
+
   return (
-    <div className="grid grid-cols-2 gap-8">
-      {data?.map((item: OrganizationProps, index: number) => (
-        <OrganizationCard key={index} {...item} />
-      ))}
+    <div
+      className="grid grid-cols-1 gap-8 lg:grid-cols-2"
+      data-aos="fade-down"
+      data-aos-delay="200"
+      data-aoa-anchor="#organization"
+    >
+      {data
+        ?.sort((a: OrganizationProps, b: OrganizationProps) => a.id - b.id)
+        .map((item: OrganizationProps, index: number) => (
+          <OrganizationCard key={index} {...item} />
+        ))}
     </div>
   );
 };
