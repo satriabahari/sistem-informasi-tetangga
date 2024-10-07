@@ -7,7 +7,7 @@ const StatisticPage = () => {
   return (
     <Container className="pt-14">
       <PageHeading
-        title="Statistic"
+        title="Statistik"
         // description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
       />
       <Statistic />

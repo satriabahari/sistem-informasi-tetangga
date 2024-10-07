@@ -7,7 +7,7 @@ const PromotionPage = () => {
   return (
     <Container className="pt-14">
       <PageHeading
-        title="My Promotion"
+        title="Promosi"
         // description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, aperiam."
       />
       <Promotion />
